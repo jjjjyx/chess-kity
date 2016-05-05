@@ -12,7 +12,7 @@
         { path: 'lib/objectId.js',                      pack: 'chess' },
         { path: 'lib/sweetalert.min.js',                pack: 'chess' },
         { path: 'lib/promise-1.0.0.js',                 pack: '*' },
-        { path: 'lib/bootstrap.min.js',              pack: '*' },
+        { path: 'lib/bootstrap.min.js',                 pack: '*' },
         
         { path: 'lib/jquery.transit.min.js',            pack: 'chess' },
         { path: 'lib/jquery.blob.js',                   pack: 'chess' },
@@ -42,21 +42,22 @@
         { path: 'src/code/theme.js',                    pack: 'chess' },
         { path: 'src/code/render.js',                   pack: 'chess' },
 
-        { path: 'src/module/pieceText.js',                   pack: 'chess' },
-        { path: 'src/module/dot.js',                   pack: 'chess' },
-        { path: 'src/module/select.js',                   pack: 'chess' },
+        { path: 'src/module/pieceText.js',              pack: 'chess' },
+        { path: 'src/module/dot.js',                    pack: 'chess' },
+        { path: 'src/module/select.js',                 pack: 'chess' },
         { path: 'src/theme/stype1.js',                  pack: 'chess' },
         /* UI 基础 */
         { path: 'ui/ui.js',                             pack: 'chess' },
         { path: 'ui/eve.js',                            pack: 'chess' },
         // { path: 'ui/memory.js',                         pack: 'chess' },//状态记忆
         // { path: 'ui/axss.js',                           pack: 'chess' },
-        { path: 'ui/main.js',                          pack: 'chess' },
+        { path: 'ui/main.js',                           pack: 'chess' }
     ];
     console.log(typeof(module) === 'object' && module.exports)
     if (typeof(module) === 'object' && module.exports) {
         module.exports = pathInfo;
-    }else if (document) {
+    }else 
+    if (document) {
 
         // currentScript polyfill
         if("undefined" === typeof document.currentScript){

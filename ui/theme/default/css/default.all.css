@@ -24,7 +24,7 @@ button {
   outline: none;
   background: #8aa1ad;
   cursor: default;
-  color: white;
+  color: #ffffff;
   border: none;
   box-sizing: content-box;
 }
@@ -111,7 +111,7 @@ input[type=url].form-control {
   height: 40px;
   border: 4px solid;
   border-color: #c9ced1 transparent transparent;
-  box-shadow: 0 0 35px white;
+  box-shadow: 0 0 35px #ffffff;
   z-index: 10;
   border-radius: 100%;
   -webkit-animation: rotate 1.33s ease infinite;
@@ -252,8 +252,8 @@ body {
 }
 #options-panel {
   position: absolute;
-  top: 500px;
-  right: -120px;
+  top: 550px;
+  right: -100px;
 }
 #options-panel > button {
   display: block;
