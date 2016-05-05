@@ -1,0 +1,3 @@
+CHESS.LANG['zh-cn'] = {
+	
+}

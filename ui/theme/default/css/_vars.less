@@ -1,0 +1,184 @@
+@panel-height: 28px;
+@theme-color: #0099CC;
+@main-menu-theme-color: @theme-color;
+@main-menu-fore-color: #465468;
+@tab-hover: #6c8998;
+@tab-active: darken(@tab-hover, 10%);
+@button-border: #c9ced1;
+@button-text: #5a6378;
+@button-hover: hsl(222, 55%, 96%);
+@button-active: hsl(222, 55%, 85%);
+@button-pressed: hsl(222, 55%, 90%);
+@border-color: #c9ced1;
+@ui-color: #393f4f;
+@ui-fore: white;
+
+
+
+
+.animation(@value) {
+    -webkit-animation: @value;
+    -moz-animation: @value;
+    -ms-animation: @value;
+    -o-animation: @value;
+    animation: @value;
+}
+
+.blur {
+    filter: url(../images/blur.svg#blur);
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -mz-filter: blur(5px);
+    -o-filter: blur(5px);
+    filter: blur(5px);
+}
+
+.dock(@top: 0, @right: @top, @bottom: @top, @left: @right) {
+    position: absolute;
+    top: @top;
+    right: @right;
+    bottom: @bottom;
+    left: @left;
+}
+
+
+.validate-error {
+    color: red;
+    border-color: red !important;
+    vertical-align: middle;
+}
+
+span.validate-error {
+    margin-left: 5px;
+}
+
+.button, button {
+    display: inline-block;
+    height: 30px;
+    padding: 0 15px;
+    line-height: 30px;
+    text-align: center;
+    outline: none;
+    background: lighten(@tab-active, 20%);
+    &:hover, &.hover {
+        background: lighten(@tab-hover, 20%);
+    }
+    &:active, &.active {
+        background: lighten(@tab-active, 15%);
+    }
+    &:disabled {
+        background: #CCC;
+        &:hover, &.hover,
+        &:active, &.active {
+            background: #CCC;
+        }
+    }
+    cursor: default;
+    color: @ui-fore;
+    border: none;
+    box-sizing: content-box;
+}
+
+input[type=text],
+input[type=url] {
+    padding: 2px 5px;
+    height: 16px;
+    line-height: 16px;
+    outline: none;
+    border: 1px solid #E4DFDF;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.05);
+    border-radius: 2px;
+    &:focus {
+        border-color: hsl(223, 38%, 55%);
+    }
+    &.form-control{
+        display: block;
+        width: 100%;
+        height: 40px;
+        padding: 6px 12px;
+        font-size: 14px;
+        color: #555;
+        background-color: #FFF;
+        background-image: none;
+        border-radius: 2px;
+        transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    }
+}
+
+.loading-circle(@size: 40px, @border-size: 4px) {
+    width: @size;
+    height: @size;
+    border: @border-size solid;
+    border-color: @border-color transparent transparent;
+    box-shadow: 0 0 (@size - 5px) white;
+    z-index: 10;
+    border-radius: 100%;
+    .animation(rotate 1.33s ease infinite);
+    filter: none;
+    -webkit-filter: none;
+}
+
+.loading(@color: rgb(128, 130, 140), @border-color: #fff) {
+    .loading-target {
+        .blur;
+    }
+    
+    &:after {
+        content: ' ';
+        display: block;
+        .dock;
+        background: fadeOut(@color, 25%);
+        .animation(fadeIn 3s ease);
+        z-index: 110;
+    }
+
+    &:before {
+        content: ' ';
+        .loading-circle;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -24px;
+        margin-top: -24px;
+        z-index: 111;
+    }
+}
+
+.loading {
+    .loading();
+}
+
+@-webkit-keyframes rotate {
+    from { 
+        transform: rotate(0);
+    }
+    to { 
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotate {
+    from { 
+        transform: rotate(0);
+    }
+    to { 
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@-webkit-keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}

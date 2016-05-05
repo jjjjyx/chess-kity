@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="title" content="中国象棋">
+    <meta name="keyword" content="svg,前端,象棋">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <title>中国象棋</title>
+
+    <script src="import.js?pack=chess" charset="utf-8"></script>
+    <script src="config/chess.config.js" charset="utf-8"></script>
+    <script src="lang/zh-cn/zh-cn.js" charset="utf-8"></script>
+    <link href="static/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+    
+   	<link href="static/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="static/css/sweetalert.css" type="text/css" rel="stylesheet" />
+    <link href="favicon.png" type="image/x-icon" rel="shortcut icon" class="title_icon">
+	<link href="ui/theme/default/css/default.all.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+<div id="content-wrapper">
+    <div id="chess" onselectstart="return false">
+        
+    </div>
+</div>
+</body>
+
+<!--启动代码-->
+<script>
+// $(function() {
+    var chess = CHESS.getChess('chess', window.CHESS_CONFIG);
+    chess.initUI();
+    // console.log(chess);
+    // var lastVersion = localStorage.lastKMVersion;
+    // $('#km-version').text( 'v' + KM.version );
+    // if (lastVersion != KM.version) {
+    //     $( '#km-version' ).addClass( 'new-version' );
+    //     localStorage.lastKMVersion = KM.version;
+    // }
+    // if(window.WD_CONFIG.copyright_mode){
+    //     $(".title_icon").each(function(i){
+    //         $(this).attr("href",'favicon-ncm.png');
+    //     });
+    // }
+// });
+</script>
+</html>
