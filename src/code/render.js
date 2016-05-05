@@ -131,7 +131,7 @@ kity.extendClass(Chess, function() {
             f.newf.setVisible(false);
         },
         renderPieceFrame: function(obj,my) {
-            var img = my ==1 ? "r":"b";
+            var img = my =='j0' ? "r":"b";
             var f = this._getPieceFrame(my),
             //chess.getStyle('spaceX')*node.getData('x')+chess.getStyle('pointStartX');
                 x1 = this.getStyle('spaceX') * obj.x + this.getStyle('pointStartX') ,
@@ -140,12 +140,14 @@ kity.extendClass(Chess, function() {
                 y2 = this.getStyle('spaceY') * obj.newy + this.getStyle('pointStartY'),
                 size ={width:60,height:60};
             f.oldf
+                .setUrl('ui/theme/default/img/'+img+'_box.png')
                 .setX(x1||0)
                 .setY(y1||0)
                 .setWidth(size.width | 0)
                 .setHeight(size.height | 0)
                 .setVisible(true);
             f.newf
+                .setUrl('ui/theme/default/img/'+img+'_box.png')
                 .setX(x2||0)
                 .setY(y2||0)
                 .setWidth(size.width | 0)
