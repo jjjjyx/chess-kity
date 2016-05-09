@@ -79,31 +79,6 @@ span.validate-error {
     box-sizing: content-box;
 }
 
-input[type=text],
-input[type=url] {
-    padding: 2px 5px;
-    height: 16px;
-    line-height: 16px;
-    outline: none;
-    border: 1px solid #E4DFDF;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,.05);
-    border-radius: 2px;
-    &:focus {
-        border-color: hsl(223, 38%, 55%);
-    }
-    &.form-control{
-        display: block;
-        width: 100%;
-        height: 40px;
-        padding: 6px 12px;
-        font-size: 14px;
-        color: #555;
-        background-color: #FFF;
-        background-image: none;
-        border-radius: 2px;
-        transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-    }
-}
 
 .loading-circle(@size: 40px, @border-size: 4px) {
     width: @size;

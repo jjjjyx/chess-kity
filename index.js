@@ -40,8 +40,21 @@ room.prototype.paly=function(pace){
 }
 room.prototype.setMove= function(obj){
 	var o ={
-		x:obj.x
+		x:obj.x,
+		y:9-obj.y,
+		newx:obj.newx,
+		newy:9-obj.newy,
 	}
+	this.move= o;
+	if(this.startcame=='j0'){
+		this.chess_manual.push(obj.x+""+obj.y+obj.newx+obj.newy);
+	}else{
+		this.chess_manual.push(o.x+""+o.y+o.newx+o.newy);
+	}
+}
+
+var Room = function(id){
+	this.id = id;
 }
 var area = {};
 var waitqueue = [];
@@ -49,12 +62,23 @@ io.use(function(socket, next){
   if (socket.request.headers.cookie) return next();
   next(new Error('Authentication error'));
 });
-
+var fn ={
+	createroom:function(){
+		console.log(arguments);
+		var a = arguments[1]
+		if(!area[a]){
+			area[a] = new Room(a);
+			area[a].j0= this.name
+			return {code:'1',msg:'success'};
+		}else{
+			return {code:'-1',msg:'房间名称已经存在'};
+		}
+	}
+}
 
 io.on('connection', function(socket){
-	console.log('a user connected');
+	// console.log('a user connected');
 	// console.log(socket.request.headers.cookie);
-	var conn_cookie = cookie.parse(socket.request.headers.cookie)
 
 	//监听新用户加入
 	socket.on('login', function(obj){
@@ -67,37 +91,48 @@ io.on('connection', function(socket){
 			onlineCount++;
 		}
 		//向所有客户端广播用户加入
-		io.emit('login', {onlineUsers:onlineUsers, onlineCount:onlineCount, user:obj});
+		// io.emit('login', {onlineUsers:onlineUsers, onlineCount:onlineCount, user:obj});
 		console.log(obj.id+'加入');
 	});
 
-	//监听用户发布聊天内容
+	
 	socket.on('online', function(obj){
-		//向所有客户端广播发布的消息
-		//io.emit('message', obj);
-		// console.log(obj.id+'说：'+obj.text);
-		waitqueue.push(obj)
-		if(waitqueue.length==2){
-			obj.camp = 'J0';
-			console.log("["+obj.id+"]与["+waitqueue[0].id+"]匹配成功");
-			var id = objId();
-			area[id] = new room(id,waitqueue[0].id,waitqueue[1].id);
-			io.emit('online_success',area[id]);
-			
-		}else{
-			obj.camp = 'j0';
-			console.log(obj.id+"正在等待");
-		}
+		// waitqueue.push(obj)
+		// if(waitqueue.length==2){
+		// 	obj.camp = 'J0';
+		// 	console.log("["+obj.id+"]与["+waitqueue[0].id+"]匹配成功");
+		// 	var id = objId();
+		// 	area[id] = new room(id,waitqueue[0].id,waitqueue[1].id);
+		// 	io.emit('online_success',area[id]);
+		// 	waitqueue = [];
+		// }else{
+		// 	obj.camp = 'j0';
+		// 	console.log(obj.id+"正在等待");
+		// }
 	});
-  
+  	socket.on('message',function(a){
+  		// console.log(arguments)
+  		var result = [a[0]+'_ret'];
+  		if(fn[a[0]]){
+  			var rr = fn[a[0]].apply(socket,arguments[0]);
+  			if(rr)
+  				result.push(rr);
+  		}
+  		socket.send(result);
+  	})
 	socket.on('roundend', function(obj){
 		console.log(obj);
 		var z = area[obj.areaid];
-		z.paly(obj.pace);
+		// z.paly(obj.pace);
 		z['map'] = obj.map.reverse()
 		z.setMove(obj.move);
 		z.toggleCamp();
 		io.emit('cameChange',z);
+	});
+	socket.on('online_gameOver',function(obj){
+		var z = area[obj.areaid];
+		z.status = 'end';
+		io.emit('gameOver',{areaid:obj.areaid,lose:obj.lose});
 	});
   //监听用户退出
 	socket.on('disconnect', function(){
@@ -116,5 +151,6 @@ io.on('connection', function(socket){
 			console.log(obj.id+'退出了');
 		}
 	});
+	// socket.send({aaa:123,data:{}});
 });
 module.exports = http;

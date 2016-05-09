@@ -15,8 +15,9 @@ kity.extendClass(Chess, {
 
         this._lastPiect && this._lastPiect.setTmpData('selected', false);
         this._lastPiect && this._lastPiect.setData('alpha', 1);
-        // console.log(this._map);
-        this._ps = this._bylaw[this._selectedPiece.getData('bl')](this._selectedPiece.getData('x'), this._selectedPiece.getData('y'), this._map, this._selectedPiece.getData('my'));
+        // console.log(this._map);this.getThisCamp()=='J0'?utils.arr2Clone(this._map).reverse():
+        this._ps = this._bylaw[this._selectedPiece.getData('bl')](this._selectedPiece.getData('x'), this._selectedPiece.getData('y'), this._map
+            , this._selectedPiece.getData('my'));
         this._interactChange();
         this.fire('selectionchange');
 

@@ -11,7 +11,7 @@ CHESS.registerUI('start', function(chess) {
 	var $failBtn = $('<button>').addClass('fail').appendTo($optionsBtnPanel).hide();
 	$satrtBtn.on('click',function(){
 		main.$satrtBtnPanel.slideUp();
-    	chess.startGame(false)//.renderList();
+    	chess.startGame(false,'normal','j0')//.renderList();
     	$undoBtn.show();
 	});
 	$undoBtn.on('click',function(){
@@ -23,7 +23,7 @@ CHESS.registerUI('start', function(chess) {
 	chess.on('gameOver',function(e){
 		swal({
 			text:'游戏结束',
-			title:(e.key=='j0'?'黑':'红')+'方胜',
+			title:(e.lose=='j0'?'黑':'红')+'方胜',
 			showCancelButton: true,   
             closeOnConfirm: true,
             imageUrl: "static/img/thumbs-up.jpg",

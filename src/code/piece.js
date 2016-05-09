@@ -118,11 +118,12 @@ kity.extendClass(Chess, {
 	_mans: {}, //棋子集合
 	_chess_dots: {}, //着点集合
 	_pace: [], //棋谱
-	startGame: function(isOnline,status,map) {
+	startGame: function(isOnline,status,my) {
 		this.refDots(); //重置可着点
 		this.refChess(true); //重置棋子
 		this.renderList();
 		this._isOnline = !!isOnline;
+		this._camp = my||this._camp;
 		this.setStatus(status||'normal', true);
 		this.hidePieceFrame();
 		return this;

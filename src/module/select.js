@@ -12,6 +12,7 @@ CHESS.registerModule('Select', function() {
 		events:{
 			//只能点点击 自己的棋子
 			'normal.click':function(e){
+				console.log(this.getStatus())
 				var clickNode =  e.getTargetNode();
 				//点了自己的棋子并且该棋子没有被渲染
 				if(clickNode && clickNode.getData('my') ==this.getThisCamp()&&!clickNode.isSelected()){
@@ -64,12 +65,20 @@ CHESS.registerModule('Select', function() {
 				this.renderList()
 			},
 			'eatpiece':function(e){
-				if(e.key =='j0'||e.key=='J0'){
-					this.setStatus('readonly');
-					this.fire('gameOver',{
-						lose:e.key
-					});
-				}
+				
+					if(e.key =='j0'||e.key=='J0'){
+						this.setStatus('readonly');
+						if(this.isOnline()){
+							this.fire('online_gameOver',{
+								lose:e.key
+							});
+						}else{
+							this.fire('gameOver',{
+								lose:e.key
+							});
+						}
+					}
+
 			}
 		}
 	}

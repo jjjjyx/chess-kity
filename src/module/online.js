@@ -8,6 +8,16 @@
  */
 
  CHESS.registerModule('online', function() {
+    var chess =this;
+    var connect_ret =kity.createClass('connect_retCommand', {
+        base: Command,
+        execute:function(chess,arge){
+           
+        },
+        isContentChanged: function () {
+          return false;
+        }
+    });
      var online =kity.createClass('onlineCommand', {
         base: Command,
         execute:function(chess,arge){
@@ -23,7 +33,26 @@
             chess.__c.emit('online',$.cookie('cnid'));
         }
     });
+
+    var createroom =kity.createClass('createroomCommand', {
+        base: Command,
+        execute:function(chess,arge){
+           chess.sendmsg(['createroom',arge])
+        }
+    });
+    var createroom_ret =kity.createClass('createroom_retCommand', {
+        base: Command,
+        execute:function(chess,arge){
+           //chess.sendmsg(['create',arge])
+           console.log(arge)
+        }
+    });
     return {
-        commands:{'online':online}
+        commands:{
+            'connect_ret':connect_ret,
+            'online':online,
+            'createroom':createroom,
+            'createroom_ret':createroom_ret
+        }
     }
 });

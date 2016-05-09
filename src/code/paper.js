@@ -103,14 +103,14 @@ kity.extendClass(Chess, {
             for (var n = 0; n < 9; n++) {
                 var key = this._map[i][n];
                 if (key) {
-                   this._mans[key].setData({
+                   this._mans[key].setData(utils.extend({
                         x: n,
                         y: i,
                         key: key,
                         defaultx:n,
                         defaulty:i,
                         isShow:!!ref
-                   }); 
+                   },CHESS.PIECE[key.slice(0, 1)])); 
                 }
             }
         }

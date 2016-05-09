@@ -14,6 +14,8 @@ kity.extendClass(Chess, {
 			//左侧检索
 			for (var i=x-1; i>= 0; i--){
 				if (map[y][i]) {
+					console.log(self._mans[map[y][i]].getData('my')!=my);
+					console.log(self._mans[map[y][i]]);
 					if (self._mans[map[y][i]].getData('my')!=my) d.push([i,y]);
 					break
 				}else{
@@ -144,7 +146,6 @@ kity.extendClass(Chess, {
 				if ( y-1>= 7 && (!self._mans[map[y-1][x]] || self._mans[map[y-1][x]].getData('my')!=my)) d.push([x,y-1]);
 				//老将对老将的情况
 				if ( self._mans["j0"].getData('x') == self._mans["J0"].getData('x') &&isNull) d.push([self._mans["J0"].getData('x'),self._mans["J0"].getData('y')]);
-				
 			}else{
 				//下
 				if ( y+1<= 2  && (!self._mans[map[y+1][x]] || self._mans[map[y+1][x]].getData('my')!=my)) d.push([x,y+1]);
@@ -228,6 +229,7 @@ kity.extendClass(Chess, {
 
 		//卒
 		this._bylaw.z = function (x,y,map,my){
+
 			var d=[];
 			if (my==='j0'){ //红方
 				//上
@@ -237,12 +239,13 @@ kity.extendClass(Chess, {
 				//左
 				if ( x-1>= 0 && y<=4 && (!self._mans[map[y][x-1]] || self._mans[map[y][x-1]].getData('my')!=my))d.push([x-1,y]);
 			}else{
-				//下
-				if ( y+1<= 9  && (!self._mans[map[y+1][x]] || self._mans[map[y+1][x]].getData('my')!=my)) d.push([x,y+1]);
+				//翻转 黑方在下面
+				//上
+				if ( y-1>= 0  && (!self._mans[map[y+1][x]] || self._mans[map[y+1][x]].getData('my')!=my)) d.push([x,y-1]);
 				//右
-				if ( x+1<= 8 && y>=6  && (!self._mans[map[y][x+1]] || self._mans[map[y][x+1]].getData('my')!=my)) d.push([x+1,y]);
+				if ( x+1<= 8 && y<=4  && (!self._mans[map[y][x+1]] || self._mans[map[y][x+1]].getData('my')!=my)) d.push([x+1,y]);
 				//左
-				if ( x-1>= 0 && y>=6 && (!self._mans[map[y][x-1]] || self._mans[map[y][x-1]].getData('my')!=my))d.push([x-1,y]);
+				if ( x-1>= 0 && y<=4 && (!self._mans[map[y][x-1]] || self._mans[map[y][x-1]].getData('my')!=my))d.push([x-1,y]);
 			}
 			
 			return d;
