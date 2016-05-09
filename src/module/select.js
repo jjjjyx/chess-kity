@@ -46,9 +46,21 @@ CHESS.registerModule('Select', function() {
 				console.log(this._pace);
 				//console.log(this.createMove(e.move.x,e.move.y,e.move.newx,e.move.newy));
 				console.log(e.thelaw);
+				if(e.eat_key&&(e.eat_key =='j0'||e.eat_key=='J0')){
+					this.setStatus('readonly');
+					if(this.isOnline()){
+						this.fire('online_gameOver',{
+							lose:e.key
+						});
+					}else{
+						this.fire('gameOver',{
+							lose:e.key
+						});
+					}
+				}
 				this.renderList();
 				if(this.isOnline()){
-					this.fire('roundend',{pace:e.pace,move:e.move});
+					this.fire('roundend',{pace:e.pace,move:e.move,eat_key:e.eat_key});
 				}else{
 					this.toggleCamp();
 					this.setStatus('normal');
@@ -66,18 +78,7 @@ CHESS.registerModule('Select', function() {
 			},
 			'eatpiece':function(e){
 				
-					if(e.key =='j0'||e.key=='J0'){
-						this.setStatus('readonly');
-						if(this.isOnline()){
-							this.fire('online_gameOver',{
-								lose:e.key
-							});
-						}else{
-							this.fire('gameOver',{
-								lose:e.key
-							});
-						}
-					}
+					
 
 			}
 		}

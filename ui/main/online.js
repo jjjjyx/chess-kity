@@ -15,19 +15,30 @@ CHESS.registerUI('online', function(chess) {
                 title:'创建房间',
                 type: "input",
                 allowEscapeKey:true,
-                showConfirmButton:'true',
+                // showConfirmButton:'true',
                 confirmButtonText:'确认',
                 text:'输入房间名称',
-                html:true,
+                showCancelButton: true,   
+                closeOnConfirm: false,   
+                animation: "slide-from-top",
                 inputPlaceholder: "房间名称"
             },function(inputValue){
             	if (inputValue === false) return false;
-            	if (inputValue === "") {     swal.showInputError("房间名不可为空");     return false   }
-            	chess.execCommand('createroom',inputValue);
-
+            	if (inputValue === "") {     
+            		swal.showInputError("房间名不可为空");     
+            		return false   
+            	}else
+            		chess.execCommand('createroom',inputValue);
             });
 	})
-
+	$joinBtn.on('click',function(e){
+		chess.sendmsg(['getAllroom']);
+	});
+	chess.on('outRoom',function(){
+		this._area = null;
+		this._isOnline = false;
+		main.$satrtBtnPanel.show();
+	})
 	// $onlineBtn.on('click',function(e){
 	// 	chess.execCommand('online');
 	// });

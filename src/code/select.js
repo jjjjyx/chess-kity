@@ -81,17 +81,23 @@ kity.extendClass(Chess, {
             
             //吃掉棋子
             var eatpiece = eat || (key && this._mans[key]);
+            var eat_key = key
             if (eatpiece) {
                 eatpiece.setData('isShow', false);
-                this.fire('eatpiece',{
-                    key:key
-                })
+                this.fire('movepiece', {
+                    pace: pace + dot.getData('x') + dot.getData('y'),
+                    thelaw :thelaw,
+                    move:move,
+                    eat_key:key
+                });
+            }else{
+                this.fire('movepiece', {
+                    pace: pace + dot.getData('x') + dot.getData('y'),
+                    thelaw :thelaw,
+                    move:move,
+                });
             }
-            this.fire('movepiece', {
-                pace: pace + dot.getData('x') + dot.getData('y'),
-                thelaw :thelaw,
-                move:move
-            });
+            
         }
     },
     clickThisPiece: function() {

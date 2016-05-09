@@ -13,80 +13,99 @@ Chess.registerInit(function() {
         })
         conn.on('message',function(e){
             if(utils.isArray(e)){
-                console.log(e);
                 chess.execCommand(e[0],e[1]);
             }
 
         })
-        
-        conn.on('online_success',function(data){
-        	console.log(data);
-        	if(data&&data.j0id&&data.J0id){
-        		swal.close();
+        conn.on('gameSatrt',function(area){
+            if(area.hasOwnProperty(thisobj.id)){
                 var status = 'normal';
-        		if(data['j0id']==thisobj.id){
-        		 	chess._camp = 'j0';
-        		 	
-        		 }else if(data['J0id']==thisobj.id){
-        		 	chess._camp = 'J0';
-        		 	//chess.setStatus('readonly');
-                    status = 'readonly';
-                    //console.log(chess.getStatus());
-        		 }else
-        		 	return ;
-        		 console.log("找到对手");
-        		 
-        		 //开始游戏
-        		 chess.startGame(true,status);
-        		 chess.fire('gamesatus');
-        		 // chess._isOnline = true;
-        		 chess.areaid = data['id'];
-        	}
+                chess._camp = area[thisobj.id]
+                if(chess._camp=='J0')
+                     status = 'readonly';
+                else{
+                    swal.close();
+                    swal({
+                        title:'提示',
+                        text:'开始对战'
+                    });
+                 }
+                chess._area = area;
+
+                chess.startGame(true,status);
+                chess.fire('gamesatus');
+            }
         })
         return conn;
     }
     
     chess.on('roundend',function(data){
-    	this.__c.emit('roundend',{areaid:this.areaid,pace:data.pace,map:this._map,move:data.move});
+    	// this.__c.emit('roundend',{areaid:this.areaid,pace:data.pace,map:this._map,move:data.move});
+        chess.sendmsg(['movepiece',this._area.id,data.pace,this._map,data.move,data.eat_key])
     });
     
     chess.__c = connection();
     chess.__c.on('cameChange',function(data){
-    	// console.log(data);
-    	var thisobj = $.cookie('cnid');
-    	if(data&&data.j0id&&data.J0id){
-    		if((data['j0id']==thisobj.id||data['J0id']==thisobj.id)&&data['startcame']==chess.getThisCamp()){
-    			//更新棋盘
-    			chess._pace = data['chess_manual'];
-    			chess.refChess(true,data['map']);
-    			chess.setStatus('normal',true);
+        if(chess._area&&data.id==chess._area.id){
+            //更新
+            if(chess.getThisCamp() == data['startcame']){
+                if(data.ect_key)
+                    chess._mans[data.ect_key].setData('isShow', false);
+                chess._pace = data['chess_manual'];
+                chess.refChess(true,data['map']);
+                chess.setStatus('normal',true);
+                chess.renderList();
+                chess.renderPieceFrame(data['move'],chess.getToggleCamp());
+            }else{
+                chess.setStatus('readonly');
+            }
 
-    			chess.renderList();
-    			chess.renderPieceFrame(data['move'],chess.getToggleCamp());
-    		}else if((data['j0id']==thisobj.id||data['J0id']==thisobj.id)&&data['startcame']!=chess.getThisCamp()){
-    			chess.setStatus('readonly');
-    		}
-    	}
+        }
+
     });
-    chess.__c.on('gameOver',function(e){
-        if(chess.areaid==e.areaid){
+    chess.__c.on('gameOver',function(data){
+        if(chess._area&&data.id==chess._area.id){
             swal({
                 text:'游戏结束',
-                title:(e.lose=='j0'?'黑':'红')+'方胜',
-                showCancelButton: true,   
+                title:(data.lose=='j0'?'黑':'红')+'方胜',
+                showCancelButton: true,
                 closeOnConfirm: true,
                 imageUrl: "static/img/thumbs-up.jpg",
                 confirmButtonText:'重新开始',
                 cancelButtonText:'查看棋谱'
             },function(v){
                 if(v){
-                    chess.execCommand('online');
+                    swal({
+                        title:'提示',
+                        text:'等待对方回应'
+                    });
+                    chess.sendmsg(['gameIsStart',chess._area.id,data.lose])
                 }
             });
         }
     });
+    chess.__c.on('gameIsStart',function(data){
+        if(chess._area&&data.id==chess._area.id){
+            swal({
+                text:'对方请求重新开始',
+                title:'提示',
+                showCancelButton: true,
+                closeOnConfirm: true,
+                confirmButtonText:'确定',
+                cancelButtonText:'取消'
+            },function(v){
+                if(v){
+                    chess.sendmsg(['gameAgainStart',this._area.id]);
+                }else{
+                    chess.sendmsg(['outRoom',this._area.id]);
+                    chess.fire('outRoom');
+                }
+            });
+        }
+    })
     chess.on('online_gameOver',function(e){
-        this.__c.emit('online_gameOver',{areaid:this.areaid,lose:e.lose});
+        // this.__c.emit('online_gameOver',{areaid:this.areaid,lose:e.lose});
+        chess.sendmsg(['gameOver',this._area.id,e.lose])
     })
 });
 

@@ -53,6 +53,7 @@
         { path: 'ui/ui.js',                             pack: 'chess' },
         { path: 'ui/eve.js',                            pack: 'chess' },
         // { path: 'ui/memory.js',                         pack: 'chess' },//状态记忆
+        { path: 'ui/modal.js',                          pack: 'chess' },//状态记忆
         // { path: 'ui/axss.js',                           pack: 'chess' },
 
 
