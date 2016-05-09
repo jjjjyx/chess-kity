@@ -35,7 +35,7 @@ module.exports = function(grunt) {
     var packs = ['chess','login'];
     var sources = require('./import.js');
     var srcPath = 'src/';
-    var distPath = os.hostname()=='ubuntu'?'../../www/chess'?'dist/';
+    var distPath = os.hostname().indexOf('ubuntu')>=0?'../../www/chess/':'dist/';
 
     var distPages = ['index','login'].map(function(name) {
         return distPath + name + '.html';

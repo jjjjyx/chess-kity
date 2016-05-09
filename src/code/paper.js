@@ -35,9 +35,22 @@ kity.extendClass(Chess, {
                 ['c0','m0','x0','s0','j0','s1','x1','m1','c1']
             ];
         this._initChess(utils.arr2Clone(defaultmap));
+        this._chessAddRander()
 
         if (this._options.renderTo) {
             this.renderTo(this._options.renderTo);
+        }
+    },
+    _chessAddRander:function(){
+        for(var name in this._mans){
+            if((this._mans[name] instanceof ChessBass)){
+                 this._rc.addShape(this._mans[name].getRenderContainer());
+            }
+        }
+        for(var name in this._chess_dots){
+            if((this._chess_dots[name] instanceof ChessBass)){
+               this._dotG.addShape(this._chess_dots[name].getRenderContainer());
+            }
         }
     },
     _initChess:function(map){
@@ -61,9 +74,6 @@ kity.extendClass(Chess, {
                             height: 60
                         }
                     }, CHESS.PIECE[key.slice(0, 1)]));
-
-                    this._rc.addShape(this._mans[key].getRenderContainer());
-
                 }
                 var ddd =  new ChessDot({
                     x: n,
@@ -75,7 +85,6 @@ kity.extendClass(Chess, {
                     }
                 });
                 this._chess_dots[n + "_" + i]  = ddd;
-                this._dotG.addShape(ddd.getRenderContainer());
             }
         }
     },
@@ -84,13 +93,32 @@ kity.extendClass(Chess, {
             if(this._chess_dots[aa] instanceof ChessBass)
                 this._chess_dots[aa].setData('isShow',false);
     },
-    refChess:function(ref){
+    refChess:function(ref,map){
         this._map =utils.arr2Clone(this._defaultmap);
-        for(var piece in this._mans){
-            if(this._mans[piece] instanceof Chesspiece){
-                this._mans[piece].ref(ref);
+        if(this.getThisCamp()=='J0') this._map.reverse()
+        if(map){
+            this._map = map;
+        }
+        for (var i = 0; i < 10; i++) {
+            for (var n = 0; n < 9; n++) {
+                var key = this._map[i][n];
+                if (key) {
+                   this._mans[key].setData({
+                        x: n,
+                        y: i,
+                        key: key,
+                        defaultx:n,
+                        defaulty:i,
+                        isShow:!!ref
+                   }); 
+                }
             }
         }
+        // for(var piece in this._mans){
+        //     if(this._mans[piece] instanceof Chesspiece){
+        //         this._mans[piece].ref(ref);
+        //     }
+        // }
     },
     getMans: function() {
         return this._mans;

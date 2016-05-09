@@ -8,22 +8,23 @@
     var pathInfo = [
 
         /* 依赖库 */
-        { path: 'lib/jquery-2.1.0.min.js',              pack: '*' },
+        { path: 'lib/jquery/dist/jquery.min.js',              pack: '*' },
         { path: 'lib/objectId.js',                      pack: 'chess' },
         { path: 'lib/sweetalert.min.js',                pack: 'chess' },
         { path: 'lib/promise-1.0.0.js',                 pack: '*' },
         { path: 'lib/bootstrap.min.js',                 pack: '*' },
-        
+        { path: 'lib/jquery.cookie/jquery.cookie.js',   pack: 'chess' },
         { path: 'lib/jquery.transit.min.js',            pack: 'chess' },
         { path: 'lib/jquery.blob.js',                   pack: 'chess' },
+        { path: 'lib/socket.io-client/socket.io.js',    pack: 'chess' },
         
         /* Kity 依赖库 */
         { path: 'lib/kity.js',                          pack: 'chess' },
         
         /* 核心代码 */
         { path: 'src/code/kchess.js',                   pack: 'chess' },
-        
         { path: 'src/code/chess.js',                    pack: 'chess' },
+        { path: 'src/code/command.js',                  pack: 'chess' },
         { path: 'src/code/utils.js',                    pack: 'chess' },//工具
         { path: 'src/code/key.js',                      pack: 'chess' },//棋子枚举
         { path: 'src/code/piece.js',                    pack: 'chess' },//棋子类
@@ -33,6 +34,7 @@
         { path: 'src/code/status.js',                   pack: 'chess' },//
         { path: 'src/code/paper.js',                    pack: 'chess' },//初始化svg 初始化棋盘
         { path: 'src/code/select.js',                   pack: 'chess' },//选择
+        { path: 'src/code/socket.js',                   pack: 'chess' },//连接
         
 
         { path: 'src/code/module.js',                   pack: 'chess' },
@@ -43,7 +45,8 @@
         { path: 'src/code/render.js',                   pack: 'chess' },
 
         { path: 'src/module/pieceText.js',              pack: 'chess' },
-        { path: 'src/module/dot.js',                    pack: 'chess' },
+        { path: 'src/module/Dot.js',                    pack: 'chess' },
+        { path: 'src/module/online.js',                    pack: 'chess' },
         { path: 'src/module/select.js',                 pack: 'chess' },
         { path: 'src/theme/stype1.js',                  pack: 'chess' },
         /* UI 基础 */
@@ -51,9 +54,12 @@
         { path: 'ui/eve.js',                            pack: 'chess' },
         // { path: 'ui/memory.js',                         pack: 'chess' },//状态记忆
         // { path: 'ui/axss.js',                           pack: 'chess' },
-        { path: 'ui/main.js',                           pack: 'chess' }
+
+
+        { path: 'ui/main/main.js',                           pack: 'chess' },
+        { path: 'ui/main/start.js',                           pack: 'chess' },
+        { path: 'ui/main/online.js',                           pack: 'chess' }
     ];
-    console.log(typeof(module) === 'object' && module.exports)
     if (typeof(module) === 'object' && module.exports) {
         module.exports = pathInfo;
     }else 

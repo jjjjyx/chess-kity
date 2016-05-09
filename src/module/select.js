@@ -21,18 +21,6 @@ CHESS.registerModule('Select', function() {
 				}
 			},
 			'normal.click selectpiece.click':function(e){
-				// //this.setStatus('selectpiece');
-				// var clickNode =  e.getTargetNode();
-				// var clickDot = e.getTargetDot();
-				// console.log(clickDot)
-				// //点击了棋子
-				// if (clickNode&&!clickNode.isSelected()){
-					
-				// }else 
-				// //点击了着点
-				// if(clickDot){
-				// 	//console.log(clickDot)
-				// }
 				
 			},
 			'selectdot.click':function(e){
@@ -56,10 +44,14 @@ CHESS.registerModule('Select', function() {
 			'movepiece':function(e){
 				console.log(this._pace);
 				//console.log(this.createMove(e.move.x,e.move.y,e.move.newx,e.move.newy));
-				console.log(e.move);
+				console.log(e.thelaw);
 				this.renderList();
-				this.toggleCamp();
-				this.setStatus('normal');
+				if(this.isOnline()){
+					this.fire('roundend',{pace:e.pace,move:e.move});
+				}else{
+					this.toggleCamp();
+					this.setStatus('normal');
+				}
 			},
 			'selectionchange':function(){
 				this.refDots();

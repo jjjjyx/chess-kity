@@ -118,16 +118,12 @@ kity.extendClass(Chess, {
 	_mans: {}, //棋子集合
 	_chess_dots: {}, //着点集合
 	_pace: [], //棋谱
-	startGame: function(camp, map) {
-		this._camp = camp || 'j0';
-		if (map) {
-
-		}
+	startGame: function(isOnline,status,map) {
 		this.refDots(); //重置可着点
 		this.refChess(true); //重置棋子
 		this.renderList();
-
-		this.setStatus('normal', true);
+		this._isOnline = !!isOnline;
+		this.setStatus(status||'normal', true);
 		this.hidePieceFrame();
 		return this;
 	},
@@ -183,6 +179,9 @@ kity.extendClass(Chess, {
 	},
 	getThisCamp: function() {
 		return this._camp;
+	},
+	getToggleCamp:function(){
+		return this._camp === 'j0'?'J0':'j0';
 	},
 	toggleCamp: function() {
 		if (this._camp === 'j0') {

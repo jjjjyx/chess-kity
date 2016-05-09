@@ -80,11 +80,15 @@
     });
 
     // preload css images
-    // $(function() {
-    //     var list = ["kmcat_warn.png", "kmcat_sad.png", "icons.png", "template_large.png", "history.png", "feedback.png", "iconpriority.png", "iconprogress.png", "template.png", "layout.png", "next-level.png", "prev-level.png"];
-    //     list.forEach(function(item) {
-    //         (new Image()).src = 'ui/theme/default/images/' + item;
-    //     });
-    // });
+    $(function() {
+        var list = ['b_box.png','b_p.png','bg.jpg','r_box.png','r_p.png','b_c.png','b_s.png','bg.png','r_c.png','r_s.png','b_j.png','b_x.png','dot.png','r_j.png','r_x.png','b_m.png','b_z.png','r_m.png','r_z.png'];
+        list.forEach(function(item) {
+            (new Image()).src = 'ui/theme/default/img/' + item;
+        });
+        list = ['3.jpg','fail.png','login_bg_0.jpg','undo.png','draw.png','login_bg.png','start.png'];
+        list.forEach(function(item) {
+            (new Image()).src = 'ui/theme/default/image/' + item;
+        });
+    });
 
 })();

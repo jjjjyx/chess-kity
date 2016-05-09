@@ -24,7 +24,7 @@ button {
   outline: none;
   background: #8aa1ad;
   cursor: default;
-  color: #ffffff;
+  color: white;
   border: none;
   box-sizing: content-box;
 }
@@ -111,7 +111,7 @@ input[type=url].form-control {
   height: 40px;
   border: 4px solid;
   border-color: #c9ced1 transparent transparent;
-  box-shadow: 0 0 35px #ffffff;
+  box-shadow: 0 0 35px white;
   z-index: 10;
   border-radius: 100%;
   -webkit-animation: rotate 1.33s ease infinite;
@@ -233,21 +233,26 @@ body {
   width: 100%;
   top: 390px;
 }
-#main-panel > .main-start {
+#main-panel > .main {
   width: 125px;
   height: 47px;
   display: block;
   margin: 0 auto 30px auto;
   background-color: transparent;
-  background-image: url('../image/start.png');
   background-position: 0px -1px;
   background-repeat: no-repeat;
   border-radius: 10px;
 }
-#main-panel > .main-start:hover {
+#main-panel > .main.main-online {
+  background-image: url('../image/online.png');
+}
+#main-panel > .main.main-start {
+  background-image: url('../image/start.png');
+}
+#main-panel > .main:hover {
   background-position: 0px -61px;
 }
-#main-panel > .main-start:active {
+#main-panel > .main:active {
   background-position: 0px -125px;
 }
 #options-panel {
@@ -279,4 +284,62 @@ body {
 }
 #options-panel > button:active {
   background-position: 0px -103px;
+}
+/**
+    载入动画
+*/
+.spinner {
+  margin: 10px auto;
+  width: 100px;
+  height: 60px;
+  text-align: center;
+  font-size: 10px;
+}
+.spinner > div {
+  background-color: #A91E1B;
+  height: 100%;
+  width: 6px;
+  border-radius: 4px;
+  margin: 0 5px;
+  display: inline-block;
+  -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+  animation: stretchdelay 1.2s infinite ease-in-out;
+}
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+.spinner .rect3 {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+}
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+@-webkit-keyframes stretchdelay {
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+  }
+}
+@keyframes stretchdelay {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+  }
 }

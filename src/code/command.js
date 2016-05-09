@@ -76,39 +76,12 @@ kity.extendClass(Chess, {
         if (!cmd || !~this.queryCommandState(name)) {
             return false;
         }
-        this.fire("saveScene");
-        if (!this._hasEnterExecCommand && cmd.isNeedUndo()) {
-            this._hasEnterExecCommand = true;
-            stoped = this._fire(new MinderEvent('beforeExecCommand', eventParams, true));
+        this._fire(new ChessEvent('execCommand', eventParams, false));
+        result = cmd.execute.apply(cmd, [me].concat(cmdArgs));
 
-            if (!stoped) {
-                //保存场景
-                this._fire(new MinderEvent('saveScene'));
-
-                this._fire(new MinderEvent("preExecCommand", eventParams, false));
-
-                result = cmd.execute.apply(cmd, [me].concat(cmdArgs));
-
-                this._fire(new MinderEvent('execCommand', eventParams, false));
-
-//                //保存场景
-//                this._fire(new MinderEvent('saveScene'));
-
-                if (cmd.isContentChanged()) {
-                    this._firePharse(new MinderEvent('contentchange'));
-                }
-
-                this._interactChange();
-            }
-            this._hasEnterExecCommand = false;
-        } else {
-            result = cmd.execute.apply(cmd, [me].concat(cmdArgs));
-
-            if (!this._hasEnterExecCommand) {
-                this._interactChange();
-            }
+        if (!this._hasEnterExecCommand) {
+            this._interactChange();
         }
-
         return result === undefined ? null : result;
     }
 });

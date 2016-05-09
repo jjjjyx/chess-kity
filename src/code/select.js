@@ -88,7 +88,8 @@ kity.extendClass(Chess, {
             }
             this.fire('movepiece', {
                 pace: pace + dot.getData('x') + dot.getData('y'),
-                move :thelaw
+                thelaw :thelaw,
+                move:move
             });
         }
     },
