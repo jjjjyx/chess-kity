@@ -181,8 +181,8 @@ kity.extendClass(Chess, {
 	getThisCamp: function() {
 		return this._camp;
 	},
-	getToggleCamp:function(){
-		return this._camp === 'j0'?'J0':'j0';
+	getToggleCamp:function(c){
+		return (c||this._camp) === 'j0'?'J0':'j0';
 	},
 	toggleCamp: function() {
 		if (this._camp === 'j0') {

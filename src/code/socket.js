@@ -2,7 +2,7 @@ Chess.registerInit(function() {
    var chess = this;
    $.cookie.json = true;
    function connection(){
-        var conn = io.connect('http://192.168.2.104:7101/');
+        var conn = io.connect('http://www.mbdoge.cn:7101/');
         if(!$.cookie('cnid')||!utils.isObject($.cookie('cnid'))){
 			$.cookie('cnid',{id:objectId(),name:""});
 		}
@@ -18,20 +18,26 @@ Chess.registerInit(function() {
 
         })
         conn.on('gameSatrt',function(area){
+            var thisobj = $.cookie('cnid');
             if(area.hasOwnProperty(thisobj.id)){
+                
+
                 var status = 'normal';
-                chess._camp = area[thisobj.id]
+                chess._camp = area[thisobj.id];
+                chess.fire('timerinit');//渲染双方时间
+                swal.close();
                 if(chess._camp=='J0')
                      status = 'readonly';
                 else{
-                    swal.close();
                     swal({
                         title:'提示',
                         text:'开始对战'
                     });
-                 }
+                    
+                }
+                //要计时
+                chess.fire('startTimer',{laveTime:area[area.startcame]['laveTime'],camp:area.startcame});
                 chess._area = area;
-
                 chess.startGame(true,status);
                 chess.fire('gamesatus');
             }
@@ -41,7 +47,9 @@ Chess.registerInit(function() {
     
     chess.on('roundend',function(data){
     	// this.__c.emit('roundend',{areaid:this.areaid,pace:data.pace,map:this._map,move:data.move});
-        chess.sendmsg(['movepiece',this._area.id,data.pace,this._map,data.move,data.eat_key])
+        // var time = this.getUI('time')
+        // console.log(time.getRoundTook());
+        chess.sendmsg(['movepiece',this._area.id,data.pace,this._map,data.move,data.eat_key,this.getRoundTook()])
     });
     
     chess.__c = connection();
@@ -56,14 +64,18 @@ Chess.registerInit(function() {
                 chess.setStatus('normal',true);
                 chess.renderList();
                 chess.renderPieceFrame(data['move'],chess.getToggleCamp());
+                
             }else{
                 chess.setStatus('readonly');
             }
-
+            //双方都要渲染
+            chess.fire('startTimer',{laveTime:data[data.startcame]['laveTime'],camp:data.startcame});
+            chess._area = data;
         }
 
     });
     chess.__c.on('gameOver',function(data){
+        console.log(data);
         if(chess._area&&data.id==chess._area.id){
             swal({
                 text:'游戏结束',
@@ -72,7 +84,7 @@ Chess.registerInit(function() {
                 closeOnConfirm: true,
                 imageUrl: "static/img/thumbs-up.jpg",
                 confirmButtonText:'重新开始',
-                cancelButtonText:'查看棋谱'
+                cancelButtonText:'退出房间'
             },function(v){
                 if(v){
                     swal({
@@ -80,6 +92,9 @@ Chess.registerInit(function() {
                         text:'等待对方回应'
                     });
                     chess.sendmsg(['gameIsStart',chess._area.id,data.lose])
+                }else{
+                    chess.sendmsg(['outRoom',chess._area.id]);
+                    chess.fire('outRoom');
                 }
             });
         }
@@ -95,16 +110,33 @@ Chess.registerInit(function() {
                 cancelButtonText:'取消'
             },function(v){
                 if(v){
-                    chess.sendmsg(['gameAgainStart',this._area.id]);
+                    chess.sendmsg(['gameAgainStart',chess._area.id]);
                 }else{
-                    chess.sendmsg(['outRoom',this._area.id]);
+                    chess.sendmsg(['outRoom',chess._area.id]);
                     chess.fire('outRoom');
                 }
             });
         }
     })
+    chess.__c.on('outRoom',function(data){
+        if(chess._area&&data.id==chess._area.id){
+            swal({
+                text:'<div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>',
+                html:true,
+                title:'对方退出游戏,等待新玩家加入',
+                allowEscapeKey:false,
+                showConfirmButton:'true',
+                confirmButtonText:'取消',
+            },function(v){
+                if(v){
+                    chess.sendmsg(['cancelroom',chess._area.id]);
+                }
+            });
+        }
+    });
     chess.on('online_gameOver',function(e){
         // this.__c.emit('online_gameOver',{areaid:this.areaid,lose:e.lose});
+        // console.log(e)
         chess.sendmsg(['gameOver',this._area.id,e.lose])
     })
 });
@@ -123,5 +155,8 @@ kity.extendClass(Chess, {
         sendmsg:function(msg){
             if(utils.isArray(msg))
                 this.__c.send(msg)
+        },
+        getRoundTook:function(){
+            return this.usedTime||0;
         }
 });

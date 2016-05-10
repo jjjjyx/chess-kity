@@ -59,7 +59,8 @@
 
         { path: 'ui/main/main.js',                           pack: 'chess' },
         { path: 'ui/main/start.js',                           pack: 'chess' },
-        { path: 'ui/main/online.js',                           pack: 'chess' }
+        { path: 'ui/main/online.js',                           pack: 'chess' },
+        { path: 'ui/main/time.js',                           pack: 'chess' }
     ];
     if (typeof(module) === 'object' && module.exports) {
         module.exports = pathInfo;

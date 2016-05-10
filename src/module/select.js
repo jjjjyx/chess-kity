@@ -12,7 +12,7 @@ CHESS.registerModule('Select', function() {
 		events:{
 			//只能点点击 自己的棋子
 			'normal.click':function(e){
-				console.log(this.getStatus())
+				// console.log(this.getStatus())
 				var clickNode =  e.getTargetNode();
 				//点了自己的棋子并且该棋子没有被渲染
 				if(clickNode && clickNode.getData('my') ==this.getThisCamp()&&!clickNode.isSelected()){
@@ -50,11 +50,11 @@ CHESS.registerModule('Select', function() {
 					this.setStatus('readonly');
 					if(this.isOnline()){
 						this.fire('online_gameOver',{
-							lose:e.key
+							lose:e.eat_key
 						});
 					}else{
 						this.fire('gameOver',{
-							lose:e.key
+							lose:e.eat_key
 						});
 					}
 				}

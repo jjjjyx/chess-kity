@@ -113,7 +113,44 @@ html, body {
         }
     }
 }
+#time-panel{
+    position: absolute;
+    top: 300px;
+    width:100%;
+    &>.j0-time,&>.J0-time{
+        width: 250px;
+        height: 100px;
+        position: absolute;
+        padding-left: 90px;
+        &>p{
+            font-size: 17px;
+            line-height: 30px;
+            color: black;
+            font-weight: 900;
+        }
+        &.right-bottom{
+            right: -260px;
+            bottom: -230px;
+        }
+        &.left-top{
+            left: -260px;
+            top: -85px; 
+        }
+        background-repeat: no-repeat;
+        background-color: transparent;
+    }
+    &>.j0-time{
+        &.active{
+            background-image: url('../image/2.png');
+        }
+    }
+     &>.J0-time{
+        &.active{
+            background-image: url('../image/J.png');
+        }
+    }
 
+}
 /**
     载入动画
 */
@@ -172,3 +209,4 @@ html, body {
     -webkit-transform: scaleY(1.0);
   }
 }
+

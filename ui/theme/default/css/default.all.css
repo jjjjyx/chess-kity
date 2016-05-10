@@ -264,6 +264,43 @@ body {
 #options-panel > button:active {
   background-position: 0px -103px;
 }
+#time-panel {
+  position: absolute;
+  top: 300px;
+  width: 100%;
+}
+#time-panel > .j0-time,
+#time-panel > .J0-time {
+  width: 250px;
+  height: 100px;
+  position: absolute;
+  padding-left: 90px;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+#time-panel > .j0-time > p,
+#time-panel > .J0-time > p {
+  font-size: 17px;
+  line-height: 30px;
+  color: black;
+  font-weight: 900;
+}
+#time-panel > .j0-time.right-bottom,
+#time-panel > .J0-time.right-bottom {
+  right: -260px;
+  bottom: -230px;
+}
+#time-panel > .j0-time.left-top,
+#time-panel > .J0-time.left-top {
+  left: -260px;
+  top: -85px;
+}
+#time-panel > .j0-time.active {
+  background-image: url('../image/2.png');
+}
+#time-panel > .J0-time.active {
+  background-image: url('../image/J.png');
+}
 /**
     载入动画
 */

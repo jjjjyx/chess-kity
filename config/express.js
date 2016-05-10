@@ -1,10 +1,11 @@
 var express = require('express');
-var body= require('body-parser');
+// var body= require('body-parser');
 
 module.exports = function(){
 	console.log('init express..')
 	var app = express();
-	app.use(body.json());
+
+	// app.use(body.json());
 	app.use(express.static('./dist'))
 	app.use(function(req,res,next){
 		res.status(404);

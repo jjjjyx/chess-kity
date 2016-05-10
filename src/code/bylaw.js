@@ -241,7 +241,7 @@ kity.extendClass(Chess, {
 			}else{
 				//翻转 黑方在下面
 				//上
-				if ( y-1>= 0  && (!self._mans[map[y+1][x]] || self._mans[map[y+1][x]].getData('my')!=my)) d.push([x,y-1]);
+				if ( y-1>= 0  && (!self._mans[map[y-1][x]] || self._mans[map[y-1][x]].getData('my')!=my)) d.push([x,y-1]);
 				//右
 				if ( x+1<= 8 && y<=4  && (!self._mans[map[y][x+1]] || self._mans[map[y][x+1]].getData('my')!=my)) d.push([x+1,y]);
 				//左
